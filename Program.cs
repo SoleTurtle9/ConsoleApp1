@@ -26,7 +26,7 @@ class Program
                     Console.Write("█");
                 }
             }
-        } 
+        }
     }
 
     static void DrawRectangle(int x, int y, int size)
@@ -42,7 +42,7 @@ class Program
                     Console.Write("█");
                 }
             }
-        } 
+        }
     }
 
     static void DrawField(int width, int height, int cellSize, bool showNumbers = true)
@@ -52,16 +52,16 @@ class Program
         {
             for (int x = 0; x < width; x++)
             {
-                Console.SetCursorPosition(x,y);
+                Console.SetCursorPosition(x, y);
                 Console.Write("█");
             }
         }
 
         for (int x = 0; x <= width; x += cellSize)
         {
-            for(int y = 0; y <= height; y++)
+            for (int y = 0; y <= height; y++)
             {
-                Console.SetCursorPosition(x,y);
+                Console.SetCursorPosition(x, y);
                 Console.Write("█");
             }
         }
@@ -83,7 +83,7 @@ class Program
     {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Cyan;
-        
+
         string[] banner = {
             " ██████╗ ██████╗ ███████╗███████╗████████╗██╗██╗  ██╗██╗ ██████╗██╗  ██╗",
             "██╔════╝██╔═══██╗██╔════╝██╔════╝╚══██╔══╝██║██║ ██╔╝██║██╔════╝██║ ██╔╝",
@@ -109,7 +109,7 @@ class Program
         Console.ForegroundColor = ConsoleColor.Magenta;
         Console.SetCursorPosition((Console.WindowWidth - 30) / 2, 16);
         Console.WriteLine("══════════════════════════════");
-        
+
         Console.ForegroundColor = ConsoleColor.White;
         Console.SetCursorPosition((Console.WindowWidth - 20) / 2, 18);
         Console.Write("Выберите вариант: ");
@@ -119,7 +119,7 @@ class Program
     {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Yellow;
-        
+
         string[] banner = {
             "██████╗  ██████╗ ██████╗ ███████╗██╗███╗   ██╗███████╗",
             "██╔══██╗██╔═══██╗██╔══██╗██╔════╝██║████╗  ██║██╔════╝",
@@ -145,11 +145,11 @@ class Program
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.SetCursorPosition(10, 18);
         Console.WriteLine("История ходов:");
-        
+
         for (int i = 0; i < moveHistory.Count; i++)
         {
             Console.SetCursorPosition(10, 20 + i);
-            Console.WriteLine($"{i+1}. {(moveHistory[i].Player == 0 ? "Крестик" : "Нолик")} -> клетка {moveHistory[i].Cell}");
+            Console.WriteLine($"{i + 1}. {(moveHistory[i].Player == 0 ? "Крестик" : "Нолик")} -> клетка {moveHistory[i].Cell}");
         }
 
         Console.ForegroundColor = ConsoleColor.White;
@@ -161,7 +161,7 @@ class Program
     {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Yellow;
-        
+
         string[] banner = {
             "██████╗ ██╗██████╗ ██╗    ██╗",
             "██╔══██╗██║██╔══██╗██║    ██║",
@@ -187,11 +187,11 @@ class Program
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.SetCursorPosition(10, 18);
         Console.WriteLine("История ходов:");
-        
+
         for (int i = 0; i < moveHistory.Count; i++)
         {
             Console.SetCursorPosition(10, 20 + i);
-            Console.WriteLine($"{i+1}. {(moveHistory[i].Player == 0 ? "Крестик" : "Нолик")} -> клетка {moveHistory[i].Cell}");
+            Console.WriteLine($"{i + 1}. {(moveHistory[i].Player == 0 ? "Крестик" : "Нолик")} -> клетка {moveHistory[i].Cell}");
         }
 
         Console.ForegroundColor = ConsoleColor.White;
@@ -203,7 +203,7 @@ class Program
     {
         Console.Clear();
         Console.CursorVisible = false;
-        
+
         if (OperatingSystem.IsWindows())
         {
             Console.SetWindowSize(90, 34);
@@ -212,7 +212,7 @@ class Program
 
         // Очищаем историю ходов перед новой игрой
         moveHistory.Clear();
-        
+
         // Рисуем поле с номерами клеток
         DrawField(33, 33, 11, true);
 
@@ -230,16 +230,16 @@ class Program
                 Console.Write("                     ");
             }
             cellOccupied = false;
-            
+
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.SetCursorPosition(35, 0);
             Console.Write("                    ");
             Console.SetCursorPosition(35, 0);
             Console.Write(i % 2 == 0 ? "Ход крестика" : "Ход нолика");
-            
+
             Console.SetCursorPosition(35, 3);
             Console.Write("Введите номер клетки (1-9): ");
-            
+
             // Проверяем ввод с помощью TryParse
             while (!int.TryParse(Console.ReadLine(), out input) || input < 1 || input > 9)
             {
@@ -249,9 +249,9 @@ class Program
                 Console.Write("  ");
                 Console.SetCursorPosition(35 + "Введите номер клетки (1-9): ".Length, 3);
             }
-            
+
             int currentCellValue = -1;
-            switch(input)
+            switch (input)
             {
                 case 1: currentCellValue = c1; break;
                 case 2: currentCellValue = c2; break;
@@ -263,8 +263,8 @@ class Program
                 case 8: currentCellValue = c8; break;
                 case 9: currentCellValue = c9; break;
             }
-            
-            if(currentCellValue != -1)
+
+            if (currentCellValue != -1)
             {
                 Console.SetCursorPosition(35, 4);
                 Console.Write("Клетка уже занята!");
@@ -274,13 +274,14 @@ class Program
             }
 
             // Записываем ход в историю
-            moveHistory.Add(new MoveHistory { 
-                Player = i % 2, 
+            moveHistory.Add(new MoveHistory
+            {
+                Player = i % 2,
                 Cell = input,
                 MoveNumber = i + 1
             });
 
-            switch(input)
+            switch (input)
             {
                 case 1: c1 = i % 2; break;
                 case 2: c2 = i % 2; break;
@@ -292,14 +293,14 @@ class Program
                 case 8: c8 = i % 2; break;
                 case 9: c9 = i % 2; break;
             }
-            
+
             int x = (input - 1) % 3 * 11 + 2;
             int y = (input - 1) / 3 * 11 + 1;
-            
+
             // Стираем номер клетки перед рисованием фигуры
             Console.SetCursorPosition((input - 1) % 3 * 11 + 5, (input - 1) / 3 * 11 + 5);
             Console.Write(" ");
-            
+
             if (i % 2 == 0)
             {
                 DrawCross(x, y, 7);
@@ -308,46 +309,46 @@ class Program
             {
                 DrawRectangle(x, y, 7);
             }
-            
-            if(c1 != -1 && c1 == c2 && c2 == c3) win = c1;
-            else if(c4 != -1 && c4 == c5 && c5 == c6) win = c4;
-            else if(c7 != -1 && c7 == c8 && c8 == c9) win = c7;
-            else if(c1 != -1 && c1 == c4 && c4 == c7) win = c1;
-            else if(c2 != -1 && c2 == c5 && c5 == c8) win = c2;
-            else if(c3 != -1 && c3 == c6 && c6 == c9) win = c3;
-            else if(c1 != -1 && c1 == c5 && c5 == c9) win = c1;
-            else if(c3 != -1 && c3 == c5 && c5 == c7) win = c3;
 
-            if(win != -1)
+            if (c1 != -1 && c1 == c2 && c2 == c3) win = c1;
+            else if (c4 != -1 && c4 == c5 && c5 == c6) win = c4;
+            else if (c7 != -1 && c7 == c8 && c8 == c9) win = c7;
+            else if (c1 != -1 && c1 == c4 && c4 == c7) win = c1;
+            else if (c2 != -1 && c2 == c5 && c5 == c8) win = c2;
+            else if (c3 != -1 && c3 == c6 && c6 == c9) win = c3;
+            else if (c1 != -1 && c1 == c5 && c5 == c9) win = c1;
+            else if (c3 != -1 && c3 == c5 && c5 == c7) win = c3;
+
+            if (win != -1)
             {
                 gameOver = true;
                 DrawWinnerScreen(win);
             }
-            else if(i == 8)
+            else if (i == 8)
             {
                 gameOver = true;
                 DrawDrawScreen();
             }
         }
-        
+
         Console.ReadKey();
     }
 
     static void Main(string[] args)
     {
         Console.CursorVisible = false;
-        
-        while(true)
+
+        while (true)
         {
             DrawMainMenu();
-            
+
             var key = Console.ReadKey(true).Key;
-            
-            if(key == ConsoleKey.D1 || key == ConsoleKey.NumPad1)
+
+            if (key == ConsoleKey.D1 || key == ConsoleKey.NumPad1)
             {
                 PlayGame();
             }
-            else if(key == ConsoleKey.D2 || key == ConsoleKey.NumPad2)
+            else if (key == ConsoleKey.D2 || key == ConsoleKey.NumPad2)
             {
                 break;
             }
