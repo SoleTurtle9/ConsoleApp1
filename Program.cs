@@ -7,6 +7,7 @@ class Program
     class MoveHistory
     {
         public int Player { get; set; } // 0 - крестик, 1 - нолик
+        //TODO: Сделать нумерацию выше!
         public int Cell { get; set; }   // Номер клетки (1-9)
         public int MoveNumber { get; set; } // Номер хода
     }
@@ -141,7 +142,7 @@ class Program
         Console.SetCursorPosition((Console.WindowWidth - resultText.Length) / 2, 15);
         Console.WriteLine(resultText);
 
-        // Выводим историю ходов
+        // * Выводим историю ходов
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.SetCursorPosition(10, 18);
         Console.WriteLine("История ходов:");
@@ -210,10 +211,10 @@ class Program
             Console.SetBufferSize(90, 34);
         }
 
-        // Очищаем историю ходов перед новой игрой
+        // * Очищаем историю ходов перед новой игрой
         moveHistory.Clear();
 
-        // Рисуем поле с номерами клеток
+        //* Рисуем поле с номерами клеток
         DrawField(33, 33, 11, true);
 
         int input;
@@ -298,6 +299,7 @@ class Program
             int y = (input - 1) / 3 * 11 + 1;
 
             // Стираем номер клетки перед рисованием фигуры
+            //! номер клетки не стирается
             Console.SetCursorPosition((input - 1) % 3 * 11 + 5, (input - 1) / 3 * 11 + 5);
             Console.Write(" ");
 
