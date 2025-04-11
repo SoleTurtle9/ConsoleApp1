@@ -123,6 +123,83 @@ class Program
         Console.Write("Выберите вариант: ");
     }
 
+    static void ShowVictoryScreen(int winner)
+    {
+        Console.Clear();
+        Console.ForegroundColor = winner == 1 ? ConsoleColor.Red : ConsoleColor.Green;
+
+        Console.SetCursorPosition(30, 5);
+        Console.WriteLine("██████  ██████  ██████  ███████ ██████  █████  ");
+        Console.SetCursorPosition(30, 6);
+        Console.WriteLine("██   ██ ██   ██ ██   ██ ██      ██   ██ ██   ██");
+        Console.SetCursorPosition(30, 7);
+        Console.WriteLine("██████  ██████  ██████  █████   ██   ██ ███████");
+        Console.SetCursorPosition(30, 8);
+        Console.WriteLine("██      ██   ██ ██   ██ ██      ██   ██ ██   ██");
+        Console.SetCursorPosition(30, 9);
+        Console.WriteLine("██      ██   ██ ██   ██ ███████ ██████  ██   ██");
+
+        Console.SetCursorPosition(35, 12);
+        Console.WriteLine(winner == 1 ? "Крестики победили!" : "Нолики победили!");
+
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.SetCursorPosition(30, 15);
+        Console.WriteLine("История ходов:");
+
+        Console.ForegroundColor = ConsoleColor.White;
+        for (int i = 0; i < moveHistory.Count; i++)
+        {
+            Console.SetCursorPosition(30, 17 + i);
+            Console.Write($"Ход {moveHistory[i].MoveNumber}: ");
+            Console.ForegroundColor = moveHistory[i].Player == 0 ? ConsoleColor.Red : ConsoleColor.Green;
+            Console.Write(moveHistory[i].Player == 0 ? "Крестик " : "Нолик  ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write($"в клетку {moveHistory[i].Cell}");
+        }
+
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.SetCursorPosition(30, 25);
+        Console.WriteLine("Нажмите любую клавишу для продолжения...");
+        Console.ReadKey();
+    }
+
+    static void ShowDrawScreen()
+    {
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Yellow;
+
+        Console.SetCursorPosition(32, 5);
+        Console.WriteLine("███  ██  █████  ██   ██  █████ ");
+        Console.SetCursorPosition(32, 6);
+        Console.WriteLine("████ ██ ██   ██ ██   ██ ██   ██");
+        Console.SetCursorPosition(32, 7);
+        Console.WriteLine("██ ████ ██   ██ ██   ██ ███████");
+        Console.SetCursorPosition(32, 8);
+        Console.WriteLine("██  ███ ██   ██  ██ ██  ██   ██");
+        Console.SetCursorPosition(32, 9);
+        Console.WriteLine("██   ██  █████     ███   █████ ");
+
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.SetCursorPosition(30, 12);
+        Console.WriteLine("История ходов:");
+
+        Console.ForegroundColor = ConsoleColor.White;
+        for (int i = 0; i < moveHistory.Count; i++)
+        {
+            Console.SetCursorPosition(30, 14 + i);
+            Console.Write($"Ход {moveHistory[i].MoveNumber}: ");
+            Console.ForegroundColor = moveHistory[i].Player == 0 ? ConsoleColor.Red : ConsoleColor.Green;
+            Console.Write(moveHistory[i].Player == 0 ? "Крестик " : "Нолик  ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write($"в клетку {moveHistory[i].Cell}");
+        }
+
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.SetCursorPosition(30, 22);
+        Console.WriteLine("Нажмите любую клавишу для продолжения...");
+        Console.ReadKey();
+    }
+
     static void PlayGame()
     {
         Console.Clear();
@@ -138,6 +215,14 @@ class Program
         int[,] board = new int[3, 3]; // 0 - пусто, 1 - X, 2 - O
         DrawField(33, 33, true);
 
+        // Очищаем область ввода
+        Console.SetCursorPosition(35, 0);
+        Console.Write(new string(' ', 20));
+        Console.SetCursorPosition(35, 2);
+        Console.Write(new string(' ', 30));
+        Console.SetCursorPosition(35, 3);
+        Console.Write(new string(' ', 30));
+
         for (int move = 0; move < 9; move++)
         {
             int player = move % 2 + 1;
@@ -150,11 +235,14 @@ class Program
 
             do
             {
+                // Очищаем область ввода перед новым запросом
                 Console.SetCursorPosition(35, 2);
-                Console.Write("Выберите клетку (1-9): ");
+                Console.Write("Выберите клетку (1-9):      ");
                 Console.SetCursorPosition(35, 3);
-                Console.Write("                     ");
-                Console.SetCursorPosition(55, 2);
+                Console.Write("                            ");
+
+                // Устанавливаем курсор в удобное место для ввода
+                Console.SetCursorPosition(58, 2);
 
                 if (!int.TryParse(Console.ReadLine(), out input) || input < 1 || input > 9)
                 {
@@ -203,18 +291,12 @@ class Program
             // Проверка победы
             if (CheckWin(board, player))
             {
-                Console.SetCursorPosition(35, 5);
-                Console.ForegroundColor = player == 1 ? ConsoleColor.Red : ConsoleColor.Green;
-                Console.Write(player == 1 ? "Крестики победили!" : "Нолики победили!");
-                Console.ReadKey();
+                ShowVictoryScreen(player);
                 return;
             }
         }
 
-        Console.SetCursorPosition(35, 5);
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write("Ничья!");
-        Console.ReadKey();
+        ShowDrawScreen();
     }
 
     static bool CheckWin(int[,] board, int player)
